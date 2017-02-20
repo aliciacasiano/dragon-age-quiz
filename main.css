@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.quiz {
+  border: 2px dashed red;
+  width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+footer, .questionLabel {
+	text-align: center;
+}
+
+.answerButton {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.answer0, .answer1, .answer2, .answer3, .answer4 {
+	font-size: 15px;
+}
+
+footer {
+	font-size: 24px;
+}
+
+.no-response {
+	font-size: 15px;
+	background-color: red;
+}
+
+.unanswered {
+	color: gray;
+}
+
+.correct {
+	color: green;
+}
+
+.incorrect {
+	color: red;
+}
+
+.right {
+	background-color: green;
+}
+
+.wrong {
+	background-color: red;
+}
