@@ -3,45 +3,76 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'PT Sans Narrow', sans-serif;
+  background-color: maroon;
+  background-image: url("background.jpg");
 }
 
 .quiz {
-  border: 2px dashed red;
-  width: 65%;
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 75%;
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
+  margin-top: 20px;
 }
 
-h1, h2 {
+h1 {
+  font-family: 'Bahiana', sans-serif;
   text-align: center;
+  font-size: 70px;
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: normal;
+  text-align: center;
+  padding: 0px 20px 20px 20px;
+  margin: 0px;
 }
 
 footer, .questionLabel {
-	text-align: center;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+footer, .checkboxChoices {
+  font-size: 30px;
+}
+
+.checkboxChoices {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .answerButton {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  background-color: maroon;
+  color: white;
+  border: 2px solid black;
+  border-radius: 5px;
 }
 
 .answer0, .answer1, .answer2, .answer3, .answer4 {
-	font-size: 15px;
-}
-
-footer {
-	font-size: 24px;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 20px;
 }
 
 .no-response {
-	font-size: 15px;
-	background-color: red;
+  font-size: 20px;
 }
 
 .unanswered {
@@ -56,10 +87,17 @@ footer {
 	color: red;
 }
 
+.right, .wrong, .no-response {
+  margin: 5px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
 .right {
-	background-color: green;
+  color: green;
 }
 
 .wrong {
-	background-color: red;
+  color: red;
 }
