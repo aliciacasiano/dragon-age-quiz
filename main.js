@@ -1,43 +1,43 @@
 function generateQuestions() {
   var questionsAndAnswers = [
+    { question: "What is the capital of Ferelden?",
+      answer: [ "Ostagar", "Jaundice", "Honnleath", "Denerim", "Gwaren" ],
+      rightAnswer: 3 },
+
+    { question: "Which term is used to refer to mages who have had their magical abilities severed?",
+      answer: [ "Abomination", "Tranquil", "Eluvian", "Orzammar" ],
+      rightAnswer: 1 },
+
     { question: "What class is Aveline Vallen, one of Hawke's companions in Dragon Age 2?",
       answer: [ "Warrior", "Rogue", "Darkspawn", "Mage" ],
       rightAnswer: 0 },
 
-    { question: "What is the name of the guild of assassins that Zevran Aranai worked for in Dragon Age: Origins?",
-      answer: [ "The Orlesian Fins", "The Ferelden Hounds", "The Antivan Crows", "The Free Marchers" ],
-      rightAnswer: 2 },
-
-    { question: "What is the capital of Ferelden?",
-      answer: [ "Ostagar", "Jaundice", "Honnleath", "Denerim", "Gwaren" ],
+    { question: "The magical ritual that recruits must undergo in order to become members of the legendary group of heroes known as the Grey Wardens is called:",
+      answer: [ "Val Royeaux", "The Harrowing", "Tal-Vashoth", "The Joining" ],
       rightAnswer: 3 },
 
     { question: "In which Dragon Age novel did Cole appear before he became a companion in Dragon Age: Inquisition?",
       answer: [ "<i>Last Flight</i>", "<i>The Stolen Throne</i>", "<i>The Calling</i>", "<i>Asunder</i>" ],
       rightAnswer: 3 },
 
-    { question: "Put these royal Ferelden ranks in order from most to least powerful:",
-      answer: [ "Arl, teyrn, bann", "Teyrn, arl, bann", "Teyrn, bann, arl", "Bann, teyrn, arl" ],
-      rightAnswer: 1 },
-
-    { question: "What are Hawke's siblings' names?",
-      answer: [ "Alistair and Isabela", "Bethany and Carver", "Samson and Sera", "Bethany and Alistair" ],
-      rightAnswer: 1 },
+    { question: "What is the name of the guild of assassins that Zevran Aranai worked for in Dragon Age: Origins?",
+      answer: [ "The Orlesian Fins", "The Ferelden Hounds", "The Antivan Crows", "The Free Marchers" ],
+      rightAnswer: 2 },
 
     { question: "What is Bianca?",
       answer: [ "A dwarven woman", "A crossbow", "A ship", "A and C", "A and B" ],
       rightAnswer: 4 },
 
-    { question: "Which term is used to refer to mages who have had their magical abilities severed?",
-      answer: [ "Abomination", "Tranquil", "Eluvian", "Orzammar" ],
+    { question: "What are Hawke's siblings' names?",
+      answer: [ "Alistair and Isabela", "Bethany and Carver", "Samson and Sera", "Bethany and Alistair" ],
       rightAnswer: 1 },
-
-    { question: "The magical ritual that recruits must undergo in order to become members of the legendary group of heroes known as the Grey Wardens is called:",
-      answer: [ "Val Royeaux", "The Harrowing", "Tal-Vashoth", "The Joining" ],
-      rightAnswer: 3 },
 
     { question: "Morrigan is the daughter of ___________, an ancient, powerful witch.",
       answer: [ "Merrill", "Flemeth", "Vivienne", "Solas" ],
+      rightAnswer: 1 },
+
+    { question: "Put these royal Ferelden ranks in order from most to least powerful:",
+      answer: [ "Arl, teyrn, bann", "Teyrn, arl, bann", "Teyrn, bann, arl", "Bann, teyrn, arl" ],
       rightAnswer: 1 } ];
 
   return questionsAndAnswers;
@@ -46,7 +46,6 @@ function generateQuestions() {
 
 function initializeAnswers(numberOfQuestions) {
   // initializes the array of user's answers to 'unanswered'
-  // over the course of the quiz, each question will be set to 'correct' or 'incorrect' depending on the answer
   var usersAnswers = [];
 
   for (var i = 0; i < numberOfQuestions; i++) {
@@ -57,7 +56,7 @@ function initializeAnswers(numberOfQuestions) {
 
 
 function displayQuestion(currentQuestion, questionsAndAnswers) {
-  // generating the question text
+  // prints the current question, its answers, and the question number
   var labelText = 'Question ' + (currentQuestion+1) + ' of 10';
   var mainText = questionsAndAnswers[currentQuestion].question;
   var answerText = '<form>';
@@ -72,11 +71,12 @@ function displayQuestion(currentQuestion, questionsAndAnswers) {
 
   $('.questionLabel').html(labelText);
   $('h2').html(mainText);
+  $('.checkboxChoices').removeClass("invisible");
   $('.checkboxChoices').html(answerText);
 }
 
 
-function displayAnswers(usersAnswers) {
+function displayAnswerStreak(usersAnswers) {
   // generates the footer based on an array of strings designating whether the user got the question right or not
   var footerText = '';
 
@@ -94,7 +94,7 @@ function displayAnswers(usersAnswers) {
 }
 
 
-function catchAnswer(currentQuestion, questionsAndAnswers, usersAnswers, usersChoice) {
+function determineRightOrWrong(currentQuestion, questionsAndAnswers, usersAnswers, usersChoice) {
   // determines whether or not the user got the question right and returns an updated array of the user's correct/incorrect responses
   var currentAnswer;
 
@@ -118,42 +118,43 @@ function catchAnswer(currentQuestion, questionsAndAnswers, usersAnswers, usersCh
 
 
 function startTheQuiz () {
-  // boolean to indicate the quiz has begun used for initialization purposes
+  // a boolean used to indicate that the quiz has begun; used for initialization purposes
   var quizBegun = false;
 
-  // a messy way to get the quiz to pause on the answer screen to show the user the correct answer when they
-  // get the question wrong
+  // a boolean used to pause on the answer screen and tell the user if they are right or wrong
   var answerPause = false;
 
-  // an integer indicating the index of the current question; initially set to 0 to show the quiz has yet to begin
+  // an integer indicating the index of the current question
   var questionNumber = 0;
 
   // an array of objects storing the quiz questions and answers
   var questionsAndAnswers = generateQuestions();
 
-  // an array of booleans that will keep track of which questions the user answered correctly
+  // an array of booleans used to keep track of which questions the user answered correctly
   var usersAnswers = initializeAnswers(questionsAndAnswers.length);
+
+  $('.checkboxChoices').addClass("invisible");
 
   $('.main').on('click', '.answerButton', function(event) {
     event.preventDefault();
 
     if (!quizBegun)
     {
-      // the button click signifies the quiz is beginning and it should only display the first question, not check for an answer
+      // this button click signifies that the quiz is beginning anew; it should only display the first question,
+      // not check for an answer
       $('h1').html("Dragon Age Quiz");
-      $('.checkboxChoices').html('');
       displayQuestion(questionNumber, questionsAndAnswers);
-      displayAnswers(usersAnswers);
+      displayAnswerStreak(usersAnswers);
       quizBegun = true;
     }
     else if ((questionNumber < questionsAndAnswers.length) && (!answerPause))
     {
       // the quiz is in progress
-      // a button click should check to make sure an answer has been chosen, then compare it to the correct answer and
+      // this button click should check to make sure an answer has been chosen, then compare it to the correct answer and
       // update the array that keeps track of correct/incorrect answers
 
       var currentCheckbox = '';
-      var currentAnswer = -1;
+      var currentAnswer = null;
 
       for (var i = 0; i < questionsAndAnswers[questionNumber].answer.length; i++)
       {
@@ -162,13 +163,11 @@ function startTheQuiz () {
         if ($(currentCheckbox).is(':checked'))
         {
           currentAnswer = i;
-
-          // break out of for loop
-          i = questionsAndAnswers[questionNumber].answer.length;
+          break;
         }
       }
 
-      if (currentAnswer === -1)
+      if (currentAnswer === null)
       {
         // the user didn't click a radio button
         $('footer').addClass("no-response");
@@ -177,7 +176,7 @@ function startTheQuiz () {
       else
       {
         // find out if the answer the user gave is correct
-        usersAnswers = catchAnswer(questionNumber, questionsAndAnswers, usersAnswers, currentAnswer);
+        usersAnswers = determineRightOrWrong(questionNumber, questionsAndAnswers, usersAnswers, currentAnswer);
         $('footer').removeClass("no-response");
         $('footer').html("");
 
@@ -194,7 +193,7 @@ function startTheQuiz () {
       if (questionNumber < questionsAndAnswers.length)
       {
         displayQuestion(questionNumber, questionsAndAnswers);
-        displayAnswers(usersAnswers);
+        displayAnswerStreak(usersAnswers);
       }
       $('.answerBlurb').removeClass("right");
       $('.answerBlurb').removeClass("wrong");
@@ -210,6 +209,7 @@ function startTheQuiz () {
         {
           if (usersAnswers[i] === 'correct')
           {
+            // determining how many the user got right total
             numberRight++;
           }
         }
