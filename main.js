@@ -1,3 +1,6 @@
+// This function is fine as it is. I could easily make it more generic when I learn how to read in
+// data from files or databases.
+
 function generateQuestions() {
   var questionsAndAnswers = [
     { question: "What is the capital of Ferelden?",
@@ -44,6 +47,12 @@ function generateQuestions() {
 }
 
 
+
+
+
+// I could have attached the user's right answers to the array of objects that handles the questions,
+// but I prefer things this way. Is it less efficient?
+
 function initializeAnswers(numberOfQuestions) {
   // initializes the array of user's answers to 'unanswered'
   var usersAnswers = [];
@@ -53,6 +62,9 @@ function initializeAnswers(numberOfQuestions) {
   }
   return usersAnswers;
 }
+
+
+
 
 
 function displayQuestion(currentQuestion, questionsAndAnswers) {
@@ -76,12 +88,16 @@ function displayQuestion(currentQuestion, questionsAndAnswers) {
 }
 
 
+
+
+
 function displayAnswerStreak(usersAnswers) {
   // generates the footer based on an array of strings designating whether the user got the question right or not
   var footerText = '';
 
   $('footer').removeClass("no-response");
 
+  // Would a .map() or .each() method here be any more economical?
   for (var i = 0; i < usersAnswers.length; i++) {
     if (usersAnswers[i] === 'unanswered')
       footerText += '<span class="unanswered">&#8226;</span> '; // gray bullet
@@ -92,6 +108,9 @@ function displayAnswerStreak(usersAnswers) {
   }
   $('footer').html(footerText);
 }
+
+
+
 
 
 function determineRightOrWrong(currentQuestion, questionsAndAnswers, usersAnswers, usersChoice) {
@@ -116,6 +135,11 @@ function determineRightOrWrong(currentQuestion, questionsAndAnswers, usersAnswer
   return usersAnswers;
 }
 
+
+
+
+
+// My main problem with my code are all in this function. I wanted to 
 
 function startTheQuiz () {
   // a boolean used to indicate that the quiz has begun; used for initialization purposes
