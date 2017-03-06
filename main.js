@@ -139,7 +139,10 @@ function determineRightOrWrong(currentQuestion, questionsAndAnswers, usersAnswer
 
 
 
-// My main problem with my code are all in this function. I wanted to 
+// My main problem with my code is all in this function. I wanted to split things up more, but I
+// wasn't sure what would carry through to the functions I split the code into. I realize now
+// I probably could pass the event object if I needed to, but I'm still unsure as to how that
+// would work and how clear it would be.
 
 function startTheQuiz () {
   // a boolean used to indicate that the quiz has begun; used for initialization purposes
